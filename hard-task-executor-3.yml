@@ -1,0 +1,10 @@
+version: 1.0
+provider:
+  name: openfaas
+  gateway: http://127.0.0.1:8080
+functions:
+  hard-task-executor-3:
+    lang: python3
+    handler: ./hard-task-executor-3
+    image: konstantinsk/hard-task-executor-3:latest
+

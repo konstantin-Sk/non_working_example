@@ -1,0 +1,24 @@
+Lang: python3 (3.7)
+
+0) Install packags from requirements.txt
+pip install -r hard-task-executor-3/requirements.txt
+
+
+1) Run a docker container with STAN
+docker run  -p 4222:4222 -p 8222:8222 --net=func_functions nats-streaming -V
+p.s. for func_functions attachable = True
+
+2) Run remote listener: python3 remote_listener.py
+
+3) To ensure that STAN is available run test_sender.py which have same code as in handler.py.
+With only deleted commented lines to make code shorter.
+python3 test_sender.py
+
+In terminal where you launched remote_listener you will see "REMOTE LISTENER: STARTED LISTENING tasks.log
+Received a message on 'tasks.log ': {'task_status': 'STARTED', 'task_id': 'TEST_TEST'} in TIME: 19:44:46
+"
+It means that server is available and message where sended.
+
+4) Invoke a hard-task-executor-3 via faas-cli
+echo -n "TEST_TEST" | faas-cli invoke hard-task-executor-3
+And wait some time while it will return a 502 error.
